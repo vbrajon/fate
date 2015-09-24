@@ -1,0 +1,14 @@
+{
+  "name": "cucumber-steps",
+  "version": "0.0.0",
+  "scripts": {
+    "test": "_mocha --compilers 'coffee:coffee-script/register' --timeout 10000 test/run.coffee"
+  },
+  "dependencies": {
+    "coffee-script": "*",
+    "chai": "*",
+    "mocha": "*",
+    "webdriverio": "*",
+    "yadda": "*"
+  }
+}
