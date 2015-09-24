@@ -2,7 +2,7 @@ module.exports = ->
   see = (negative, text, element, done) ->
     re = new RegExp text
     browser
-    .waitForExist element
+    .waitForExist element, 2000
     .getText element
     .then (result) ->
       if negative
