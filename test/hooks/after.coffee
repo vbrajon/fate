@@ -1,2 +1,2 @@
 module.exports = (done) ->
-  @browser.end done
+  global.browser.end done

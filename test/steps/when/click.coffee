@@ -1,6 +1,6 @@
 module.exports = ->
   @when /^I click on "$string"$/, (element, done) ->
-    @browser
+    browser
     .click element
     .call done
 

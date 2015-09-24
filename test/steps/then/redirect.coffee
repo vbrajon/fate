@@ -3,9 +3,9 @@ module.exports = ->
     if /^http/.test path
       url = path
     else
-      url = @BASE_URL + path
+      url = BASE_URL + path
 
-    @browser.url (err, result) ->
+    browser.url (err, result) ->
       should.not.exist err
       if negative
         result.value.should.not.equal url, 'expected url not to be ' + result.value

@@ -1,5 +1,10 @@
 WebdriverIO = require('webdriverio')
 
 module.exports = (done) ->
-  @browser = WebdriverIO.remote @webdriverOptions
-  @browser.init().call done
+  webdriverOptions =
+    logLevel: 'silent'
+    desiredCapabilities:
+      browserName: BROWSER
+
+  global.browser = WebdriverIO.remote webdriverOptions
+  global.browser.init().call done

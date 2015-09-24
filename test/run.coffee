@@ -7,6 +7,7 @@ global.should = chai.should()
 Yadda.plugins.mocha.StepLevelPlugin.init()
 
 dictionary = (new Yadda.Dictionary)
+.define 'string', /"([^"]*)"/
 .define 'number', /(\d+)/, Yadda.converters.integer
 .define 'list', /([^\u0000]*)/, Yadda.converters.list
 .define 'table', /([^\u0000]*)/, Yadda.converters.table
@@ -17,28 +18,16 @@ new (Yadda.FileSearch)('test/steps').each (file) ->
 
 yadda = Yadda.createInstance library
 
-global.context =
-  BASE_URL: process.env.BASE_URL || 'http://127.0.0.1'
-  yadda: yadda
-  webdriverOptions:
-    logLevel: 'silent'
-    desiredCapabilities:
-      browserName: process.env.BROWSER || 'chrome'
+global.yadda = yadda
+global.BASE_URL = process.env.BASE_URL || 'http://127.0.0.1'
+global.BROWSER = process.env.BROWSER || 'chrome'
 
 new (Yadda.FeatureFileSearch)('test/features').each (file) ->
   featureFile file, (feature) ->
-    before (done) ->
-      require(__dirname + '/hooks/before').call global.context, done
-
-    beforeEach (done) ->
-      require(__dirname + '/hooks/before-each').call global.context, done
-
+    before require './hooks/before'
+    beforeEach require './hooks/before-each'
     scenarios feature.scenarios, (scenario) ->
       steps scenario.steps, (step, done) ->
-        yadda.run step, global.context, done
-
-    afterEach (done) ->
-      require(__dirname + '/hooks/after-each').call global.context, done
-
-    after (done) ->
-      require(__dirname + '/hooks/after').call global.context, done
+        yadda.run step, done
+    afterEach require './hooks/after-each'
+    after require './hooks/after'
