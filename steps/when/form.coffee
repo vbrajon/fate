@@ -1,5 +1,5 @@
 module.exports = ->
-  @when /^I submit the form$/, (done) ->
+  @when /^I submit $element$/, (element, done) ->
     browser
-    .submitForm 'form'
+    .submitForm element
     .call done

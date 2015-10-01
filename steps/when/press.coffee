@@ -1,5 +1,6 @@
 module.exports = ->
-  @when /^I press ENTER$/, (constant, done) ->
+  @when /^I press ENTER$/, (done) ->
+    # U+E007
     browser
-    .keys 'ENTER'
+    .keys ''
     .call done
