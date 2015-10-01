@@ -15,8 +15,8 @@ dictionary = (new Yadda.Dictionary)
 .define 'table', /([^\u0000]*)/, Yadda.converters.table
 
 library = Yadda.localisation.English.library dictionary
-new (Yadda.FileSearch)('test/steps').each (file) ->
-  require(__dirname + '/../' + file).call library
+new (Yadda.FileSearch)('steps').each (file) ->
+  require('./' + file).call library
 
 yadda = Yadda.createInstance library
 
@@ -24,7 +24,7 @@ global.yadda = yadda
 global.BASE_URL = process.env.BASE_URL || 'http://127.0.0.1'
 global.BROWSER = process.env.BROWSER || 'chrome'
 
-new (Yadda.FeatureFileSearch)('test/features').each (file) ->
+new (Yadda.FeatureFileSearch)('features').each (file) ->
   featureFile file, (feature) ->
     global.feature = feature
     before require './hooks/before'
