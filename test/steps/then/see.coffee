@@ -1,5 +1,8 @@
 module.exports = ->
-  see = (negative, text, element, done) ->
+  @then /^I should( not)? see $string$/, (negative, text, done) ->
+    yadda.run step + " in 'body'", done
+
+  @then /^I should( not)? see $string in $element$/, (negative, text, element, done) ->
     re = new RegExp text
     browser
     .waitForExist element, 2000
@@ -11,13 +14,7 @@ module.exports = ->
         result.should.match re
     .call done
 
-  @then /^I should( not)* see $string$/, (negative, text, done) ->
-    see negative, text, 'body', done
-
-  @then /^I should( not)* see $string in $string$/, (negative, text, element, done) ->
-    see negative, text, element, done
-
-  @then /^I should( not)* see $string in the url$/, (negative, path, done) ->
+  @then /^I should( not)? see $string in the url$/, (negative, path, done) ->
     if /^http/.test path
       url = path
     else
@@ -32,7 +29,7 @@ module.exports = ->
         result.value.should.equal url
     .call done
 
-  @then /^I should( not)* see $string in the title$/, (negative, title, done) ->
+  @then /^I should( not)? see $string in the title$/, (negative, title, done) ->
     browser
     .getTitle (err, result) ->
       should.not.exist(err);

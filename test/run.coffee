@@ -8,6 +8,8 @@ Yadda.plugins.mocha.StepLevelPlugin.init()
 
 dictionary = (new Yadda.Dictionary)
 .define 'string', /"([^"]*)"/
+.define 'element', /'([^']*)'/
+.define 'constant', /([A-Z_]*)/
 .define 'number', /(\d+)/, Yadda.converters.integer
 .define 'list', /([^\u0000]*)/, Yadda.converters.list
 .define 'table', /([^\u0000]*)/, Yadda.converters.table
@@ -24,10 +26,13 @@ global.BROWSER = process.env.BROWSER || 'chrome'
 
 new (Yadda.FeatureFileSearch)('test/features').each (file) ->
   featureFile file, (feature) ->
+    global.feature = feature
     before require './hooks/before'
     beforeEach require './hooks/before-each'
     scenarios feature.scenarios, (scenario) ->
+      global.scenario = scenario
       steps scenario.steps, (step, done) ->
+        global.step = step
         yadda.run step, done
     afterEach require './hooks/after-each'
     after require './hooks/after'

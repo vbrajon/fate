@@ -1,6 +1,8 @@
 module.exports = ->
   @given /^I am on the homepage$/, (done) ->
-    browser.url BASE_URL, done
+    browser
+    .url BASE_URL
+    .call done
 
   @given /^I am on $string$/, (path, done) ->
     if /^http/.test path
@@ -8,4 +10,6 @@ module.exports = ->
     else
       url = BASE_URL + path
 
-    browser.url url, done
+    browser
+    .url url
+    .call done
