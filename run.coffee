@@ -1,6 +1,8 @@
 Yadda = require 'yadda'
 chai = require 'chai'
 
+global.BASE_URL = process.env.BASE_URL || 'http://127.0.0.1'
+global.BROWSER = process.env.BROWSER || 'chrome'
 global.expect = chai.expect
 global.assert = chai.assert
 global.should = chai.should()
@@ -28,11 +30,7 @@ new (Yadda.FeatureFileSearch)('features').each (file) ->
             args[number-1]
         yadda.run steps, done
 
-yadda = Yadda.createInstance library
-
-global.yadda = yadda
-global.BASE_URL = process.env.BASE_URL || 'http://127.0.0.1'
-global.BROWSER = process.env.BROWSER || 'chrome'
+global.yadda = Yadda.createInstance library
 
 new (Yadda.FeatureFileSearch)('features').each (file) ->
   featureFile file, (feature) ->
