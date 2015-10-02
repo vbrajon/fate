@@ -9,7 +9,6 @@ module.exports = ->
       url = path
     else
       url = BASE_URL + path
-
     browser
     .url url
     .call done

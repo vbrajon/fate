@@ -8,7 +8,6 @@ module.exports = ->
     steps = table.map (item) ->
       "And I fill '#{item.element}' with \"#{item.value}\""
     steps.push "And I submit the form '#{element}'"
-
     yadda.run steps, done
 
   @when /^I submit the form $element$/, (element, done) ->

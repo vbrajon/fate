@@ -19,7 +19,6 @@ module.exports = ->
       url = path
     else
       url = BASE_URL + path
-
     browser
     .url (err, result) ->
       should.not.exist err
@@ -32,7 +31,7 @@ module.exports = ->
   @then /^I should( not)? see $string in the title$/, (negative, title, done) ->
     browser
     .getTitle (err, result) ->
-      should.not.exist(err);
+      should.not.exist err
       if negative
         result.should.not.equal title
       else
