@@ -1,6 +1,6 @@
 module.exports = ->
   @then /^I should( not)? see $string$/, (negative, text, done) ->
-    yadda.run step + " in 'body'", done
+    yadda.run @step + " in 'body'", done
 
   @then /^I should( not)? see $string in $element$/, (negative, text, element, done) ->
     re = new RegExp text

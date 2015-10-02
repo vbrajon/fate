@@ -17,6 +17,16 @@ dictionary = (new Yadda.Dictionary)
 library = Yadda.localisation.English.library dictionary
 new (Yadda.FileSearch)('steps').each (file) ->
   require('./' + file).call library
+new (Yadda.FeatureFileSearch)('features').each (file) ->
+  featureFile file, (feature) ->
+    scenarios feature.scenarios, (scenario) ->
+      return unless scenario.annotations.define
+      stepDefinition = new RegExp '^' + scenario.title + '$'
+      library.define stepDefinition, (args..., done) ->
+        steps = scenario.steps.map (step) ->
+          step.replace /\$(\d)+/g, (match, number) ->
+            args[number-1]
+        yadda.run steps, done
 
 yadda = Yadda.createInstance library
 
@@ -26,13 +36,11 @@ global.BROWSER = process.env.BROWSER || 'chrome'
 
 new (Yadda.FeatureFileSearch)('features').each (file) ->
   featureFile file, (feature) ->
-    global.feature = feature
     before require './hooks/before'
     beforeEach require './hooks/before-each'
     scenarios feature.scenarios, (scenario) ->
-      global.scenario = scenario
+      return if scenario.annotations.define
       steps scenario.steps, (step, done) ->
-        global.step = step
         yadda.run step, done
     afterEach require './hooks/after-each'
     after require './hooks/after'

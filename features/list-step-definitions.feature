@@ -1,6 +1,8 @@
 Feature: List Step Definitions
+  As a tester, I can see steps that I can use in my test case
 
 Scenario:
+  Given I am on "/html5-test-page" seing "HTML5 Test Page" but not "blublu" inside 'h1'
   Given I am on "http://cbracco.github.io/html5-test-page/"
   Given I am on the homepage
   Given I am on "/html5-test-page"
