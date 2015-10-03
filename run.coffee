@@ -8,13 +8,19 @@ global.assert = chai.assert
 global.should = chai.should()
 Yadda.plugins.mocha.StepLevelPlugin.init()
 
+text2matrix = (text, next) ->
+  Yadda.converters.list text, (err, list) ->
+    next null, list.map (line) ->
+      line.split(' - ')
+text2regex = (text, next) ->
+  next null, new RegExp text
 dictionary = (new Yadda.Dictionary)
 .define 'string', /"([^"]*)"/
 .define 'element', /'([^']*)'/
 .define 'constant', /([A-Z_]*)/
+.define 'regex', /\/(.*)\//, text2regex
+.define 'matrix', /[\ \n]?([^\u0000]*)/, text2matrix
 .define 'number', /(\d+)/, Yadda.converters.integer
-.define 'list', /([^\u0000]*)/, Yadda.converters.list
-.define 'table', /([^\u0000]*)/, Yadda.converters.table
 
 library = Yadda.localisation.English.library dictionary
 new (Yadda.FileSearch)('steps').each (file) ->
@@ -22,12 +28,12 @@ new (Yadda.FileSearch)('steps').each (file) ->
 new (Yadda.FeatureFileSearch)('features').each (file) ->
   featureFile file, (feature) ->
     scenarios feature.scenarios, (scenario) ->
-      return unless scenario.annotations.define
-      stepDefinition = new RegExp '^' + scenario.title + '$'
-      library.define stepDefinition, (args..., done) ->
+      stepDefinition = new RegExp '^' + scenario.title + ' with$matrix'
+      library.define stepDefinition, (matrix, done) ->
         steps = scenario.steps.map (step) ->
-          step.replace /\$(\d)+/g, (match, number) ->
-            args[number-1]
+          matrix.forEach (line) ->
+            step = step.replace line[0], line[1]
+          step
         yadda.run steps, done
 
 global.yadda = Yadda.createInstance library
@@ -37,7 +43,7 @@ new (Yadda.FeatureFileSearch)('features').each (file) ->
     before require './hooks/before'
     beforeEach require './hooks/before-each'
     scenarios feature.scenarios, (scenario) ->
-      return if scenario.annotations.define
+      return if scenario.annotations.exclude
       steps scenario.steps, (step, done) ->
         yadda.run step, done
     afterEach require './hooks/after-each'

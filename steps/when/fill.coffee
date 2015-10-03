@@ -4,9 +4,9 @@ module.exports = ->
     .setValue element, value
     .call done
 
-  @when /^I fill the form $element with\n$table$/, (element, table, done) ->
-    steps = table.map (item) ->
-      "And I fill '#{item.element}' with \"#{item.value}\""
+  @when /^I fill the form $element with$matrix$/, (element, matrix, done) ->
+    steps = matrix.map (line) ->
+      "And I fill #{line[0]} with #{line[1]}"
     steps.push "And I submit the form '#{element}'"
     yadda.run steps, done
 

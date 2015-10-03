@@ -1,5 +1,5 @@
-# FATE
-> Fast Application Testing Environment
+# FATE - Fast Application Testing Environment
+> Testing meant to be simple
 
 ### Quick Start
 
@@ -19,4 +19,16 @@ sudo python3 -m http.server 80
 
 # Run
 npm test
+BROWSER=SAUCE SAUCE_USERNAME=<U> SAUCE_ACCESS_KEY=<K> npm test
 ```
+
+### Roadmap
+
+- [x] substep
+- [x] remote, multi-device (saucelabs)
+- [ ] mobile (appium)
+- [ ] passing/failing badge per scenario
+- [ ] screenshots per scenario
+- [ ] browser runner (like velocity)
+- [ ] angular/meteor
+- [ ] parallel testing

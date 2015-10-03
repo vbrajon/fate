@@ -1,39 +1,59 @@
 module.exports = ->
-  @then /^I should( not)? see $string$/, (negative, text, done) ->
-    yadda.run @step + " in 'body'", done
+  append = (string) ->
+    (args..., done) ->
+      yadda.run @step + string, done
+
+  @then /^I should( not)? see $string$/, append " in 'body'"
+
+  @then /^I should( not)? see $regex$/, append " in 'body'"
 
   @then /^I should( not)? see $string in $element$/, (negative, text, element, done) ->
-    re = new RegExp text
-    browser
-    .waitForExist element, 2000
-    .getText element
-    .then (result) ->
-      if negative
-        result.should.not.match re
-      else
-        result.should.match re
-    .call done
+    step = @step.replace '"' + text + '"', new RegExp '^' + text + '$'
+    yadda.run step, done
 
   @then /^I should( not)? see $string in the url$/, (negative, path, done) ->
     if /^http/.test path
       url = path
     else
       url = BASE_URL + path
+    step = @step.replace '"' + path + '"', new RegExp '^' + url + '$'
+    yadda.run step, done
+
+  @then /^I should( not)? see $string in the title$/, (negative, title, done) ->
+    step = @step.replace '"' + title + '"', new RegExp '^' + title + '$'
+    yadda.run step, done
+
+  @then /^I should( not)? see $regex in $element$/, (negative, regex, element, done) ->
+    browser
+    .waitForExist element, 2000
+    .getText element
+    .then (result) ->
+      if negative
+        result.should.not.match regex
+      else
+        result.should.match regex
+    .call done
+
+  @then /^I should( not)? see $regex in the url$/, (negative, regex, done) ->
     browser
     .url (err, result) ->
       should.not.exist err
+      return result.value
+    .then (result) ->
       if negative
-        result.value.should.not.equal url
+        result.should.not.match regex
       else
-        result.value.should.equal url
+        result.should.match regex
     .call done
 
-  @then /^I should( not)? see $string in the title$/, (negative, title, done) ->
+  @then /^I should( not)? see $regex in the title$/, (negative, regex, done) ->
     browser
     .getTitle (err, result) ->
       should.not.exist err
+      return result
+    .then (result) ->
       if negative
-        result.should.not.equal title
+        result.should.not.match regex
       else
-        result.should.equal title
+        result.should.match regex
     .call done
