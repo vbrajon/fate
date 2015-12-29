@@ -13,7 +13,7 @@ text2matrix = (text, next) ->
     next null, list.map (line) ->
       line.split(' - ')
 text2regex = (text, next) ->
-  next null, new RegExp text
+  next null, new RegExp text.replace(/ /g, '[\\s\\S]'), 'i'
 dictionary = (new Yadda.Dictionary)
 .define 'string', /"([^"]*)"/
 .define 'element', /'([^']*)'/
