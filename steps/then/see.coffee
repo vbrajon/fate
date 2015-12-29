@@ -15,7 +15,7 @@ module.exports = ->
     if /^http/.test path
       url = path
     else
-      url = BASE_URL + path
+      url = program.url + path
     step = @step.replace '"' + path + '"', new RegExp '^' + url + '$'
     yadda.run step, done
 

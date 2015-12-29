@@ -1,8 +1,8 @@
 {
-  "name": "cucumber-steps",
-  "version": "0.0.0",
-  "scripts": {
-    "test": "_mocha --compilers 'coffee:coffee-script/register' --slow 200 --timeout 20000 run.coffee"
+  "name": "fate",
+  "version": "1.0.0",
+  "bin": {
+    "fate": "bin/fate"
   },
   "dependencies": {
     "coffee-script": "*",

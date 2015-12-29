@@ -11,6 +11,5 @@ module.exports = (done) ->
       done e
 
   browser
-  .timeoutsAsyncScript 20000
   .executeAsync waitForAngular
   .call done

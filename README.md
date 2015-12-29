@@ -4,22 +4,9 @@
 ### Quick Start
 
 ```
-# Get code
-git clone git@github.com:vbrajon/fate.git
-cd fate
-npm install
+npm install -g fatest
 
-# Start selenium
-sudo npm install -g selenium-standalone
-sudo selenium-standalone install
-selenium-standalone start
-
-# Serve index.html (for demo purpose)
-sudo python3 -m http.server 80
-
-# Run
-npm test
-BROWSER=SAUCE SAUCE_USERNAME=<U> SAUCE_ACCESS_KEY=<K> npm test
+fate
 ```
 
 ### Roadmap

@@ -1,11 +1,4 @@
 Yadda = require 'yadda'
-chai = require 'chai'
-
-global.BASE_URL = process.env.BASE_URL || 'http://127.0.0.1'
-global.BROWSER = process.env.BROWSER || 'chrome'
-global.expect = chai.expect
-global.assert = chai.assert
-global.should = chai.should()
 Yadda.plugins.mocha.StepLevelPlugin.init()
 
 text2matrix = (text, next) ->
@@ -23,9 +16,9 @@ dictionary = (new Yadda.Dictionary)
 .define 'number', /(\d+)/, Yadda.converters.integer
 
 library = Yadda.localisation.English.library dictionary
-new (Yadda.FileSearch)('steps').each (file) ->
-  require('./' + file).call library
-new (Yadda.FeatureFileSearch)('features').each (file) ->
+new (Yadda.FileSearch)(__dirname + '/steps').each (file) ->
+  require(file).call library
+new (Yadda.FeatureFileSearch)(program.featureFolder).each (file) ->
   featureFile file, (feature) ->
     scenarios feature.scenarios, (scenario) ->
       stepDefinition = new RegExp '^' + scenario.title + ' with$matrix'
@@ -38,13 +31,13 @@ new (Yadda.FeatureFileSearch)('features').each (file) ->
 
 global.yadda = Yadda.createInstance library
 
-new (Yadda.FeatureFileSearch)('features').each (file) ->
+new (Yadda.FeatureFileSearch)(program.featureFolder).each (file) ->
   featureFile file, (feature) ->
-    before require './hooks/before'
-    beforeEach require './hooks/before-each'
+    before require __dirname + '/hooks/before'
+    beforeEach require __dirname + '/hooks/before-each'
     scenarios feature.scenarios, (scenario) ->
       return if scenario.annotations.exclude
       steps scenario.steps, (step, done) ->
         yadda.run step, done
-    afterEach require './hooks/after-each'
-    after require './hooks/after'
+    afterEach require __dirname + '/hooks/after-each'
+    after require __dirname + '/hooks/after'

@@ -1,9 +1,9 @@
 module.exports =
-  logLevel: 'silent'
   host: 'ondemand.saucelabs.com'
   port: 80
   user: process.env.SAUCE_USERNAME
   key: process.env.SAUCE_ACCESS_KEY
+  logLevel: 'silent'
   desiredCapabilities:
     # platform: 'Windows 7'
     # browserName: 'chrome'
