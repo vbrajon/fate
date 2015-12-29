@@ -7,7 +7,7 @@ Scenario: Steps
   Given I am on the homepage
   When I click on 'a[href="#forms__input"]'
   When I fill '#input__text' with "Text"
-  When I fill the form 'form' with
+  When I submit 'form' with
   ---
   '[type="password"]' - "secret"
   '[type="url"]' - "http://me.com"
@@ -15,7 +15,7 @@ Scenario: Steps
   #input__text3 - Error! This line is considered a comment
   '#input__text3' - "This line is not considered a comment"
   ---
-  When I submit the form 'form'
+  When I submit 'form'
   When I press ENTER
   When I go fullscreen
   When I set the window size to "1024x800"

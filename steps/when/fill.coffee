@@ -4,13 +4,13 @@ module.exports = ->
     .setValue element, value
     .call done
 
-  @when /^I fill the form $element with$matrix$/, (element, matrix, done) ->
-    steps = matrix.map (line) ->
-      "And I fill #{line[0]} with #{line[1]}"
-    steps.push "And I submit the form '#{element}'"
-    yadda.run steps, done
-
-  @when /^I submit the form $element$/, (element, done) ->
+  @when /^I submit $element$/, (element, done) ->
     browser
     .submitForm element
     .call done
+
+  @when /^I submit $element with$matrix$/, (element, matrix, done) ->
+    steps = matrix.map (line) ->
+      "And I fill #{line[0]} with #{line[1]}"
+    steps.push "And I submit '#{element}'"
+    yadda.run steps, done

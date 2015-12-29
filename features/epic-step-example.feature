@@ -26,7 +26,7 @@ Scenario: Run stuff
 Scenario: Run Sophie's step
   Given I am on the homepage
   When I click on 'a[href="#forms__input"]'
-  When I fill the form 'form' with
+  When I submit 'form' with
   ---
   '[type="password"]' - "secret"
   '[type="url"]' - "http://me.com"
