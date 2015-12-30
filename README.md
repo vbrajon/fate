@@ -4,8 +4,8 @@
 ### Quick Start
 
 ```
-npm install -g fatest
-
+sudo npm install -g fatest
+sudo fate install
 fate
 ```
 
@@ -13,9 +13,9 @@ fate
 
 - [x] substep
 - [x] remote, multi-device (saucelabs)
+- [x] command line tool
+- [x] angular
+- [ ] meteor
 - [ ] mobile (appium)
-- [ ] passing/failing badge per scenario
-- [ ] screenshots per scenario
 - [ ] browser runner (like velocity)
-- [ ] angular/meteor
-- [ ] parallel testing
+- [ ] API per scenario (badge passing/failing - screenshots)

@@ -1,5 +1,5 @@
 {
-  "name": "fate",
+  "name": "fatest",
   "version": "1.0.0",
   "bin": {
     "fate": "bin/fate"
@@ -8,6 +8,7 @@
     "coffee-script": "*",
     "chai": "*",
     "mocha": "*",
+    "selenium-standalone": "*",
     "webdriverio": "*",
     "yadda": "*"
   }
