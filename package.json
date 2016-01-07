@@ -6,6 +6,8 @@
   },
   "dependencies": {
     "coffee-script": "*",
+    "commander": "*",
+    "shelljs": "*",
     "chai": "*",
     "mocha": "*",
     "selenium-standalone": "*",
