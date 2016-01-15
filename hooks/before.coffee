@@ -1,5 +1,5 @@
 module.exports = (done) ->
   browser
   .init()
-  .timeoutsAsyncScript program.timeout
+  .timeoutsAsyncScript config.timeout
   .call done

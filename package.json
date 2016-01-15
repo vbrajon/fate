@@ -5,12 +5,13 @@
     "fate": "bin/fate"
   },
   "dependencies": {
-    "coffee-script": "*",
-    "commander": "*",
-    "shelljs": "*",
     "chai": "*",
+    "coffee-script": "*",
+    "colors": "*",
+    "commander": "*",
     "mocha": "*",
     "selenium-standalone": "*",
+    "shelljs": "*",
     "webdriverio": "*",
     "yadda": "*"
   }

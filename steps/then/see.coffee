@@ -1,26 +1,24 @@
 module.exports = ->
-  append = (string) ->
-    (args..., done) ->
-      yadda.run @step + string, done
+  @then /^I should( not)? see $string$/, (negative, text, done) ->
+    yadda.run @step + " in 'body'", done
 
-  @then /^I should( not)? see $string$/, append " in 'body'"
-
-  @then /^I should( not)? see $regex$/, append " in 'body'"
+  @then /^I should( not)? see $regex$/, (negative, text, done) ->
+    yadda.run @step + " in 'body'", done
 
   @then /^I should( not)? see $string in $element$/, (negative, text, element, done) ->
-    step = @step.replace '"' + text + '"', new RegExp '^' + text + '$'
+    step = @step.replace '"' + text + '"', new RegExp text
     yadda.run step, done
 
   @then /^I should( not)? see $string in the url$/, (negative, path, done) ->
     if /^http/.test path
       url = path
     else
-      url = program.url + path
-    step = @step.replace '"' + path + '"', new RegExp '^' + url + '$'
+      url = config.baseUrl + path
+    step = @step.replace '"' + path + '"', new RegExp url
     yadda.run step, done
 
   @then /^I should( not)? see $string in the title$/, (negative, title, done) ->
-    step = @step.replace '"' + title + '"', new RegExp '^' + title + '$'
+    step = @step.replace '"' + title + '"', new RegExp title
     yadda.run step, done
 
   @then /^I should( not)? see $regex in $element$/, (negative, regex, element, done) ->

@@ -13,11 +13,8 @@ Scenario: Steps
   When I set the page size to "1024x800"
   When I wait 1s
   When I wait 10ms
-  # Partial match
-  Then I should see /HTML5 T/
-  Then I should see /127.0.0.1/ in the url
+  Then I should see "HTML5 Test" in the title
+  Then I should not see /^HTML5 Test$/ in 'h1'
+  Then I should see /HTML5 T.../
   Then I should not see /This doesn't match/ in 'header'
-  # Exact match
-  Then I should not see "HTML5 T"
-  Then I should not see "/html5?" in the url
-  Then I should see "HTML5 Test Page" in the title
+  # Spaces in regex are automatically transformed by [\s\S]

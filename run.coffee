@@ -1,6 +1,7 @@
 Yadda = require 'yadda'
 Yadda.plugins.mocha.StepLevelPlugin.init()
 
+# Dictionary
 text2matrix = (text, next) ->
   Yadda.converters.list text, (err, list) ->
     next null, list.map (line) ->
@@ -15,10 +16,11 @@ dictionary = (new Yadda.Dictionary)
 .define 'matrix', /[\ \n]?([^\u0000]*)/, text2matrix
 .define 'number', /(\d+)/, Yadda.converters.integer
 
+# Library
 library = Yadda.localisation.English.library dictionary
 new (Yadda.FileSearch)(__dirname + '/steps').each (file) ->
   require(file).call library
-new (Yadda.FeatureFileSearch)(program.featureFolder).each (file) ->
+new (Yadda.FeatureFileSearch)(config.features).each (file) ->
   featureFile file, (feature) ->
     scenarios feature.scenarios, (scenario) ->
       stepDefinition = new RegExp '^' + scenario.title + ' with$matrix'
@@ -31,7 +33,8 @@ new (Yadda.FeatureFileSearch)(program.featureFolder).each (file) ->
 
 global.yadda = Yadda.createInstance library
 
-new (Yadda.FeatureFileSearch)(program.featureFolder).each (file) ->
+# Scenarios
+new (Yadda.FeatureFileSearch)(config.features).each (file) ->
   featureFile file, (feature) ->
     before require __dirname + '/hooks/before'
     beforeEach require __dirname + '/hooks/before-each'
