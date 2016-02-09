@@ -20,6 +20,8 @@ dictionary = (new Yadda.Dictionary)
 library = Yadda.localisation.English.library dictionary
 new (Yadda.FileSearch)(__dirname + '/steps').each (file) ->
   require(file).call library
+new (Yadda.FileSearch)(config.steps).each (file) ->
+  require(file).call library
 new (Yadda.FeatureFileSearch)(config.features).each (file) ->
   featureFile file, (feature) ->
     scenarios feature.scenarios, (scenario) ->

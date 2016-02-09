@@ -42,13 +42,6 @@ log = (txt, args...) ->
   if program.verbose
     console.log colors.yellow(txt), args
 
-sh = require 'shelljs'
-sh.config.silent = true
-sh.ls program.features
-if sh.error()
-  error 'Your feature folder %s is empty !', program.features
-  return program.help()
-
 # Normalize Config
 try
   config = require program.config
@@ -64,7 +57,19 @@ config.baseUrl = 'http://' + config.baseUrl unless /^http/.test config.baseUrl
 config.desiredCapabilities ?=
   browserName: program.browser
 
+config.features = process.cwd() + '/' + config.features
+config.steps = process.cwd() + '/' + config.steps
+config.hooks = process.cwd() + '/' + config.hooks
+
 log 'config', config
+
+sh = require 'shelljs'
+sh.config.silent = true
+sh.ls config.features + '/*.feature'
+if sh.error()
+  error sh.error()
+  error 'Your feature folder %s is empty !', config.features
+  return program.help()
 
 selenium = require 'selenium-standalone'
 WebdriverIO = require 'webdriverio'
